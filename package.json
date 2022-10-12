@@ -6,12 +6,17 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.1.1",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.1.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "react-quill": "^2.0.0",
+    "react-router-dom": "^6.4.1",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "sass": "^1.55.0",
+    "web-vitals": "^2.1.4",
+    "yarn": "^1.22.19"
   },
-  "scripts": {
+  "scripts": {  
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -34,5 +39,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "proxy": "http://localhost:8080/api/"
 }
