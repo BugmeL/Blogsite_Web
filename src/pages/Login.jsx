@@ -1,20 +1,62 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import axios from "axios";
+import React, { useState } from "react";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
 
-function Login() {
+const Login = () => {
+  const [inputs, setInputs] = useState({
+    username: "",
+    password: "",
+  });
+  const [err, setError] = useState(null);
+
+  const navigate = useNavigate();
+
+  const { login } = useContext(AuthContext);
+
+  const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+    //  await login(inputs);
+     await axios.post("http://localhost:8800/api/auth/login", inputs);
+
+      navigate("/");
+    } catch (err) {
+      setError(err.response.data);
+    }
+  };
   return (
-    <div className='auth'>
+    <div className="auth">
       <h1>Login</h1>
-      <form>
-        <input required type="text" placeholder='username' />
-        <input required type="password" placeholder='password' />
-        <button>Login</button>
-        <p>This is an error!</p>
-        <span>Don't you have an account? <Link to="/register">Register</Link>
+      <form type="POST">
+        <input
+          required
+          type="text"
+          placeholder="username"
+          name="username"
+          onChange={handleChange}
+        />
+        <input
+          required
+          type="password"
+          placeholder="password"
+          name="password"
+          onChange={handleChange}
+        />
+        <button onClick={handleSubmit}>Login</button>
+        {err && <p>{err}</p>}
+        <span>
+          console.log(err)
+          Don't you have an account? <Link to="/register">Register</Link>
         </span>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
