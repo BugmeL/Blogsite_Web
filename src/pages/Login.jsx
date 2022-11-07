@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useContext } from "react";
+// import { useContext } from "react";
+// import { AuthContext } from "../context/authContext";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/authContext";
+
 
 const Login = () => {
   const [inputs, setInputs] = useState({
@@ -13,8 +14,10 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const { login } = useContext(AuthContext);
+  // const { login } = useContext(AuthContext);
 
+  
+  
   const handleChange = (e) => {
     setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -22,41 +25,45 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-    //  await login(inputs);
-     await axios.post("http://localhost:8800/api/auth/login", inputs);
+       await axios.post("/auth/login", inputs)
+    //  await axios.post("http://localhost:8800/api/auth/login", inputs)
+     
+    navigate("/");
 
-      navigate("/");
     } catch (err) {
-      setError(err.response.data);
+      //  console.log(err.data.data)
+      setError(err.res.data);
+      
+   
+    
     }
   };
   return (
     <div className="auth">
       <h1>Login</h1>
-      <form type="POST">
+      <form>
         <input
           required
           type="text"
-          placeholder="username"
+          placeholder='username'
           name="username"
           onChange={handleChange}
         />
         <input
           required
           type="password"
-          placeholder="password"
+          placeholder='password'
           name="password"
           onChange={handleChange}
         />
         <button onClick={handleSubmit}>Login</button>
         {err && <p>{err}</p>}
         <span>
-          console.log(err)
           Don't you have an account? <Link to="/register">Register</Link>
         </span>
       </form>
     </div>
-  );
-};
+  )
+}
 
 export default Login;
