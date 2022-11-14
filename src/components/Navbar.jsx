@@ -7,7 +7,7 @@ import { useContext } from 'react'
  
 const Navbar = () =>{
 
-  // const {currentUser, logout} = useContext(AuthContext);
+   const {User, logout} = useContext(AuthContext);
 
   return (
     <div className='navbar'>
@@ -34,8 +34,12 @@ const Navbar = () =>{
         <Link className="link" to="/?cat=food">
           <h6>FOOD</h6>
         </Link>
-          <span>Mel</span>
-         <Link to="/login"><span >Logout</span></Link>
+          <span>{User}</span>
+      {User ?(<span onClick={logout}>Logout</span> 
+      ) : (<Link className="link" to="/login">
+        Login</Link>
+      )}
+      
         <span className="write">
           <Link to="/write">Write</Link>
         </span>
